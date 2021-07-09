@@ -1,0 +1,44 @@
+.home-page {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 625px;
+    background: url('../../assets/images/finderlanches-bg.jpg');
+    background-repeat: no-repeat;
+    background-size: 100% 99.99%;
+}
+.home-content {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.apresentation {
+    width: 600px;
+    margin-left: 50px;
+}
+
+.apresentation h1 {
+    font-size: 4rem;
+    font-weight: 900;
+}
+
+.apresentation p {
+    margin-top: 20px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 40px;
+}
+
+.apresentation a.know-more {
+
+    background-color: #da4408;
+    padding: 14px 21px;
+    color: #fff0d3;
+    border-radius: 4px;
+    text-decoration: none;
+}
