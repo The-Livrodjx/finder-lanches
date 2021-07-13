@@ -1,5 +1,5 @@
 nav.header {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -7,7 +7,29 @@ nav.header {
     padding: 0 50px;
     display: flex;
     justify-content: space-between;
+    transition: all 0.3s ease;
     z-index: 5;
+}
+
+.awaysTopPage {
+    position: absolute;
+    top: 0;
+    left: 0;    
+}
+
+nav.header.sticky {
+    border-bottom: 1px solid #023a8d0a;
+    padding: 10px 50px; 
+    margin: 0;
+    padding-top: 0;
+    height: 100px;
+    color: #fff !important;
+    background-color: #167902;
+    border-color: #fff;
+    z-index: 999;
+}
+nav.header.sticky ul.nav img {
+    filter: invert(1);
 }
 
 ul.nav {
@@ -18,6 +40,30 @@ ul.nav {
     list-style: none;
 }
 
+.icon {
+    color: #222;
+    font-size: 20px;
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    display: none;
+    z-index: 999;
+}
+
+.cancel-btn{
+    position: absolute;
+    right: 30px;
+    top: 20px;
+    color: #fff;
+}
+
+.menu-btn {
+    position: absolute;
+    right: 30px;
+    display: none;
+    top: 20px;
+    color: #fff;
+}
 .header .logo {
     margin-top: 30px;
     display: inline-flex;
@@ -29,6 +75,7 @@ ul.nav {
     font-size: 1.2rem;
     font-weight: 900;
 }
+
 .header .logo img {
     height: 110px;
     width: 110px;
@@ -38,191 +85,58 @@ ul.nav li {
     margin: 30px 20px 0px;
 }
 
-ul.nav li a img{
+ul.nav li a img {
     height: 2.3rem;
     width: 2.3rem;
 }
 
-.login-form {
-    position: absolute;
-    z-index: 10;
-    width: 100%;
-    height: 100vh;
-    background-color: #0000004d;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
+@media (max-width: 868px) {
+    body.disabled {
+        overflow: hidden;
+    }
+    .header.show ul.nav .icon { 
+        display: block !important;
+        z-index: 999;
+    }
 
-.login-form-content {
-    position: relative;
-    border-radius: 20px ;
-    height: 620px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 500px;
-    background-color: #fae0ae;
-}
+    .header.show ul.nav .menu-btn {
+        display: block !important;
+        position: absolute;
+        left: 30px;
+        top: 20px;
+        color: #fff;
+    }
 
-.login-form-content a img {
-    position: absolute;
-    top: 15px;
-    right: 10px;
-    width: 30px; 
-    height: 30px;
-}
-
-.login-form-content h1 {
-    margin: 30px 0 70px 0;
-}
-.login-form-content form input {
-
-    border-radius: 5px;
-    border: none;
-    margin: 10px;
-    width: 250px;
-    padding: 10px;
-}
-
-.login-form-content form button {
-    margin-top: 20px;
-    padding: 14px 27px;
-    width: 200px;
-    border-radius: 5px;
-    margin-left: 35px;
-    border: none;
-    cursor: pointer;
-    color: #fff;
-    background-color: #da4408;
-}
-
-.login-form-content form button:hover {
-    background-color: #f54906;
-    transition: 0.2s;
-}
-
-.login-form-content .create-account {
-    position: absolute;
-    bottom: 0px;
-    width: 100%;
-    border-radius: 0px 0px 20px 20px ;
-    height: 150px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color:  #0b4100;
-    color: #fff;
-}
-
-.create-account p {
-    margin: 20px 0;
-}
-
-.create-account button {
-    cursor: pointer;
-    border: 1px solid #177703;
-    border-radius: 3px;
-    width: 150px;
-    padding: 14px 21px;
-    background-color: #0b4100;
-    color: #fff;
-}
-
-.create-account button:hover {
-    transition: 0.2s;
-    background-color: #167902;
-}
-
-.register-form {
-    position: absolute;
-    z-index: 10;
-    width: 100%;
-    height: 100vh;
-    background-color: #0000004d;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.register-form-content {
-    position: relative;
-    border-radius: 20px ;
-    height: 620px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 500px;
-    background-color: #fae0ae;
-}
-
-.register-form-content a img {
-    position: absolute;
-    top: 15px;
-    right: 10px;
-    width: 30px; 
-    height: 30px;
-}
-
-.register-form-content h1 {
-    margin: 30px 0;
-}
-.register-form-content form input {
-
-    border-radius: 5px;
-    border: none;
-    margin: 10px;
-    width: 250px;
-    padding: 10px;
-}
-
-.register-form-content form button {
-    margin-top: 20px;
-    padding: 14px 27px;
-    width: 200px;
-    border-radius: 5px;
-    margin-left: 35px;
-    border: none;
-    cursor: pointer;
-    color: #fff;
-    background-color: #da4408;
-}
-
-.register-form-content form button:hover {
-    background-color: #f54906;
-    transition: 0.2s;
-}
-
-.register-form-content .create-account {
-    position: absolute;
-    bottom: 0px;
-    width: 100%;
-    border-radius: 0px 0px 20px 20px ;
-    height: 120px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color:  #0b4100;
-    color: #fff;
-}
-
-.register-form .create-account p {
-    margin: 20px 0;
-}
-
-.register-form .create-account button {
-    cursor: pointer;
-    border: 1px solid #177703;
-    border-radius: 3px;
-    width: 150px;
-    padding: 14px 21px;
-    background-color: #0b4100;
-    color: #fff;
-}
-
-.register-form .create-account button:hover {
-    transition: 0.2s;
-    background-color: #167902;
+    .header.show ul.nav .icon.hide {
+        display: none;
+    }
+    .header ul.nav {
+        position: fixed;
+        height: 100vh;
+        width: 100%;
+        max-width: 500px;
+        right: -100%;
+        top: 0px;
+        display: block;
+        padding: 20px 0;
+        text-align: center;
+        background: #0b4100;
+        color: #fff;
+        transition: all 0.3s ease;
+    }
+    .header.show ul.nav  {
+        right: 0%;
+    }
+    .header ul.nav li {
+        margin-top: 45px;
+    }
+    .header ul.nav li a {
+        color: #fff;
+        font-size: 23px;
+        margin-right: -100%;
+        transition: 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+    .header.show ul.nav li a {
+        margin-right: 0px;
+    }
 }

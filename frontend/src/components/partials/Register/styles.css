@@ -1,0 +1,91 @@
+.register-form {
+    position: absolute;
+    z-index: 10;
+    width: 100%;
+    height: 100vh;
+    background-color: #0000004d;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.register-form-content {
+    position: relative;
+    border-radius: 20px ;
+    height: 620px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 500px;
+    background-color: #fae0ae;
+}
+
+.register-form-content a img {
+    position: absolute;
+    top: 15px;
+    right: 10px;
+    width: 30px; 
+    height: 30px;
+}
+
+.register-form-content h1 {
+    margin: 30px 0;
+}
+.register-form-content form input {
+
+    border-radius: 5px;
+    border: none;
+    margin: 10px;
+    width: 250px;
+    padding: 10px;
+}
+
+.register-form-content form button {
+    margin-top: 20px;
+    padding: 14px 27px;
+    width: 200px;
+    border-radius: 5px;
+    margin-left: 35px;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    background-color: #da4408;
+}
+
+.register-form-content form button:hover {
+    background-color: #f54906;
+    transition: 0.2s;
+}
+
+.register-form-content .create-account {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    border-radius: 0px 0px 20px 20px ;
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color:  #0b4100;
+    color: #fff;
+}
+
+.register-form .create-account p {
+    margin: 20px 0;
+}
+
+.register-form .create-account button {
+    cursor: pointer;
+    border: 1px solid #177703;
+    border-radius: 3px;
+    width: 150px;
+    padding: 14px 21px;
+    background-color: #0b4100;
+    color: #fff;
+}
+
+.register-form .create-account button:hover {
+    transition: 0.2s;
+    background-color: #167902;
+}

@@ -42,3 +42,81 @@
     border-radius: 4px;
     text-decoration: none;
 }
+
+section.lanches {
+    background-color: #fff0d3;
+    width: 100%;
+    height: auto;
+    min-height: 950px;
+    border-top: 1px solid #da4408;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+section.lanches > h1 {
+    margin-top: 50px;
+    font-size: 2rem;
+    color: #051a01;
+    font-weight: 700;
+    margin-bottom: 70px;
+}
+
+div.all-lanches {
+    padding: 0 40px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+div.lanche-card {
+    background-color: #fceac6;
+    width: 400px;
+    height: 400px;
+    padding: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+div.lanche-card h1 {
+    font-size: 1.2rem !important;
+
+}
+
+div.lanche-card p {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #e71b33;
+}
+
+div.lanche-card img {
+    width: 300px;
+    height: 200px;
+}
+
+div.lanche-card button.add-to-cart {
+    margin-top: 10px;
+    padding: 7px 21px;
+    height: 50px;
+    cursor: pointer;
+    margin-left: 50px;
+    border-radius: 3px;
+    border: none;
+    background-color: #167902;
+    color: #fff;
+}
+
+div.lanche-card button.add-to-cart:hover {
+    transition: 0.2s;
+    background-color: #e71b33;
+}
+
+div.lanche-card button > svg {
+    margin-right: 10px;
+}

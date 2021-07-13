@@ -1,4 +1,8 @@
-import React, {useState} from 'react'
+import React, {useState, useRef} from 'react'
+import {FaAlignJustify} from 'react-icons/fa'
+import xCloseIcon from '../../assets/images/x-close-icon.png'
+import LoginForm from '../partials/Login/LoginForm'
+import RegisterForm from '../partials/Register/RegisterForm'
 import './styles.css'
 
 export default function Header() {
@@ -6,13 +10,48 @@ export default function Header() {
     const [showLoginForm, setShowLoginForm] = useState(false)
     const [showRegisterForm, setShowRegister] = useState(false)
 
+    const topRef = useRef()
+
+    document.addEventListener("DOMContentLoaded", function(event) { 
+        const navbar = document.querySelector('nav.header');
+
+        window.onscroll = () => {
+            window.scrollY > 20 ? navbar.classList.add("sticky") : navbar.classList.remove("sticky");
+        }
+        const body = document.querySelector("body");
+        const menuBtn = document.querySelector(".menu-btn");
+        const cancelBtn = document.querySelector(".cancel-btn");
+        const navLink = document.querySelectorAll('.navLink')
+
+        menuBtn.onclick = ()=>{
+            navbar.classList.add("show");
+            menuBtn.classList.add("hide");
+            body.classList.add("disabled");
+
+            navLink.forEach(link => {
+
+                link.onclick = () => {
+                    body.classList.remove("disabled");
+                    navbar.classList.remove("show");
+                    menuBtn.classList.remove("hide");
+                }
+            })
+        }
+
+        cancelBtn.onclick = ()=>{
+            body.classList.remove("disabled");
+            navbar.classList.remove("show");
+            menuBtn.classList.remove("hide");
+        }
+    })
+
+
     function handleShowLoginForm(e) {
 
         e.preventDefault()
+        topRef.current.scrollIntoView({behavior: "smooth"})
         setShowRegister(false)
         setShowLoginForm(!showLoginForm)
-        
-        console.log("Estado mudado para: " + showLoginForm)
     }
 
     function handleShowRegisterForm(e) {
@@ -26,72 +65,48 @@ export default function Header() {
     return (
 
         <>
+            <div className="awaysTopPage" ref={topRef}/>
 
             <nav className="header">
+        
                 <div className="logo">
                     <img src="https://img.icons8.com/plasticine/2x/hamburger.png" alt="Finder-lanches" />
                     <p>Finder Lanches</p>
                 </div>
+
                 <ul className="nav">
+                    
+                    <img className="icon cancel-btn" src={xCloseIcon} style={{width: 25, height: 25}}alt=""/>
+                   
+
                     <li>
-                        <a href="/"><img src="https://img.icons8.com/ios/452/search--v3.png" alt="Procurar"/></a>
+                        <a href="/" className="navLink"><img src="https://img.icons8.com/ios/452/search--v3.png" alt="Procurar"/></a>
                     </li>
                     <li>
-                        <a href="/" onClick={(event) => handleShowLoginForm(event)}><img src="https://upload.wikimedia.org/wikipedia/commons/7/70/User_icon_BLACK-01.png" alt="Usuário"/></a>
+                        <a href="/" className="navLink" onClick={(event) => handleShowLoginForm(event)}><img src="https://upload.wikimedia.org/wikipedia/commons/7/70/User_icon_BLACK-01.png" alt="Usuário"/></a>
                     </li>
                     <li>
-                        <a href="/"><img src="https://i.pinimg.com/originals/15/4f/df/154fdf2f2759676a96e9aed653082276.png" alt="Carrinho de compras"/></a>
+                        <a href="/" className="navLink"><img src="https://i.pinimg.com/originals/15/4f/df/154fdf2f2759676a96e9aed653082276.png" alt="Carrinho de compras"/></a>
                     </li>
+
+                  
+                    <FaAlignJustify className="icon menu-btn" />
+                    
                 </ul>
             </nav>
 
             {showLoginForm ? (
-                <div className="login-form">
-                    
-                    <div className="login-form-content">
-                        <a href="/" onClick={event => handleShowLoginForm(event)}><img src="https://icon-library.com/images/x-close-icon/x-close-icon-27.jpg" alt="" /></a>
-                        <h1>Entre com sua conta</h1>
-
-                        <form action="">
-
-                            <input type="text" placeholder="E-mail"/><br/>
-                            <input type="password" placeholder="Senha" name="" id="" /><br />
-
-                            <button type="submit">Continuar</button>
-                        </form>
-
-                        <div className="create-account">
-                            <p>Ainda não tem conta ?</p>
-                            <button onClick={e => handleShowRegisterForm(e)}>Cadastrar</button>
-                        </div>
-                    </div>
-                </div>
+                <LoginForm 
+                    forShowLoginForm={handleShowLoginForm} 
+                    forShowRegisterForm={handleShowRegisterForm}
+                />
             ) : ( <> </>)}
             
             {showRegisterForm ? (
-                <div className="register-form">
-                    
-                    <div className="register-form-content">
-                        <a href="/" onClick={event => handleShowRegisterForm(event)}><img src="https://icon-library.com/images/x-close-icon/x-close-icon-27.jpg" alt="" /></a>
-                        <h1>Cadastrar uma conta</h1>
-
-                        <form action="">
-
-                            <input type="text" placeholder="Nome"/><br/>
-                            <input type="text" placeholder="E-mail"/><br/>
-                            <input type="password" placeholder="Senha" name="" id="" /><br />
-                            <input type="text" placeholder="Tel: (dd) 90000-1820" name="" id="" /><br />
-                            <input type="text" placeholder="Endereço" name="" id="" /><br />
-
-                            <button type="submit">Continuar</button>
-                        </form>
-
-                        <div className="create-account">
-                            <p>Já tem conta ?</p>
-                            <button onClick={e => handleShowLoginForm(e)}>Fazer Login</button>
-                        </div>
-                    </div>
-                </div>
+                <RegisterForm 
+                    forShowLoginForm={handleShowLoginForm}
+                    forShowRegisterForm={handleShowRegisterForm}
+                />
             ) : (<></>)}
 
         </>
