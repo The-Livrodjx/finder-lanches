@@ -1,5 +1,6 @@
-import React, {useState, useRef} from 'react'
-import {FaAlignJustify} from 'react-icons/fa'
+import React, {useState, useRef, useContext, useEffect} from 'react'
+import { UserContext } from '../../contexts/userContext'
+import {FaAlignJustify, FaArrowRight} from 'react-icons/fa'
 import xCloseIcon from '../../assets/images/x-close-icon.png'
 import LoginForm from '../partials/Login/LoginForm'
 import RegisterForm from '../partials/Register/RegisterForm'
@@ -7,6 +8,7 @@ import './styles.css'
 
 export default function Header() {
 
+    const {userName, authenticated, handleLogOut} = useContext(UserContext)
     const [showLoginForm, setShowLoginForm] = useState(false)
     const [showRegisterForm, setShowRegister] = useState(false)
 
@@ -18,33 +20,27 @@ export default function Header() {
         window.onscroll = () => {
             window.scrollY > 20 ? navbar.classList.add("sticky") : navbar.classList.remove("sticky");
         }
-        const body = document.querySelector("body");
-        const menuBtn = document.querySelector(".menu-btn");
-        const cancelBtn = document.querySelector(".cancel-btn");
-        const navLink = document.querySelectorAll('.navLink')
-
-        menuBtn.onclick = ()=>{
-            navbar.classList.add("show");
-            menuBtn.classList.add("hide");
-            body.classList.add("disabled");
-
-            navLink.forEach(link => {
-
-                link.onclick = () => {
-                    body.classList.remove("disabled");
-                    navbar.classList.remove("show");
-                    menuBtn.classList.remove("hide");
-                }
-            })
-        }
-
-        cancelBtn.onclick = ()=>{
-            body.classList.remove("disabled");
-            navbar.classList.remove("show");
-            menuBtn.classList.remove("hide");
-        }
+        
     })
 
+    useEffect(() => {
+        if(authenticated) {
+            setShowLoginForm(false)
+        }
+    }, [authenticated, showLoginForm])
+
+    function logOut(e) {
+
+        e.preventDefault()
+        
+        // eslint-disable-next-line no-restricted-globals
+        let confirmation = confirm("Tem certeza que deseja sair ?")
+
+        if(confirmation) {
+            handleLogOut()
+            window.location.reload()
+        }
+    }
 
     function handleShowLoginForm(e) {
 
@@ -83,12 +79,33 @@ export default function Header() {
                         <a href="/" className="navLink"><img src="https://img.icons8.com/ios/452/search--v3.png" alt="Procurar"/></a>
                     </li>
                     <li>
-                        <a href="/" className="navLink" onClick={(event) => handleShowLoginForm(event)}><img src="https://upload.wikimedia.org/wikipedia/commons/7/70/User_icon_BLACK-01.png" alt="Usuário"/></a>
+                        {userName !== undefined ? (
+                            <>  
+                                <div style={{display: 'inline-flex', alignItems: 'center'}}>
+                                    <img style={{width: 35, height: 35, marginRight: 10}} 
+                                    src="https://upload.wikimedia.org/wikipedia/commons/7/70/User_icon_BLACK-01.png" 
+                                    alt="Usuário"/>
+
+                                    <h4>{userName}</h4>
+                                </div>
+                                
+                            </>
+                            
+                        ) : (
+                            <a href="/" className="navLink" onClick={(event) => handleShowLoginForm(event)}><img src="https://upload.wikimedia.org/wikipedia/commons/7/70/User_icon_BLACK-01.png" alt="Usuário"/></a>
+                        )}
+                        
+                        
                     </li>
                     <li>
                         <a href="/" className="navLink"><img src="https://i.pinimg.com/originals/15/4f/df/154fdf2f2759676a96e9aed653082276.png" alt="Carrinho de compras"/></a>
                     </li>
-
+                    
+                    {userName !== undefined && (
+                        <li>
+                            <a href="/" className="navLink"><FaArrowRight onClick={e => logOut(e)} style={{width: '1.6rem', height: '1.6rem'}} alt="Sair"/></a>
+                        </li>
+                    ) }
                   
                     <FaAlignJustify className="icon menu-btn" />
                     

@@ -8,7 +8,7 @@ class UserController {
    
     async index(req, res) {
 
-        res.json({msg: "UserController"})
+        res.json({msg: "Tudo ok"})
     }
     
     async genToken(req, res ) {
@@ -37,7 +37,7 @@ class UserController {
 
     async createUser(req, res) {
 
-        const {name, email, password, role} = req.body 
+        const {name, email, password, tel,endereco, role} = req.body 
 
         let salt = bcrypt.genSaltSync(10)
         let hash = bcrypt.hashSync(password, salt)
@@ -45,7 +45,7 @@ class UserController {
         UserModel.findOne({where: {email: email}}).then(user => {
 
             if(!user) {
-                UserModel.create({name, email, password: hash, role}).then(() => {
+                UserModel.create({name, email, password: hash, tel, endereco, role}).then(() => {
 
                     res.json({msg: "Usuário criado com sucesso"})
                 })
@@ -62,10 +62,52 @@ class UserController {
             
             res.status(406)
             res.json({err: err.message})
-        })
-        
+        })        
+    }
 
-        
+    async authenticate(req, res) {
+
+        const {email, password} = req.body
+
+        if(email !== '' && email !== " " && email !== undefined) {
+
+            if(password !== '' && password !== " " && password !== undefined){
+
+                UserModel.findOne({
+                    where: {email: email}
+                }).then(user => {
+
+                    if(user !== undefined) {
+                        let correct = bcrypt.compareSync(password, user.password)
+                        if(correct) {
+
+                            var token = jwt.sign({name: user.name}, secret, {expiresIn: Date.now() * 60 * 60})
+
+                            return res.json({token, userName: user.name})
+                        }
+                        else {
+                            res.status(406)
+                            return res.json({errMsg: "Email ou senha inválidos", err})
+                        }
+                    }
+                    else {
+                        res.status(406)
+                        return res.json({errMsg: "Email ou senha inválidos", err})
+                    }
+                }).catch(err => {
+                    res.status(406)
+                    return res.json({errMsg: "Email ou senha inválidos", err})
+                })
+            }
+            else {
+                res.status(406)
+                return res.json({errMsg: "Por favor digite os dados corretamente"})
+            }
+        }
+        else {
+            res.status(406)
+            return res.json({errMsg: "Por favor digite os dados corretamente"})
+        }
     }
 
 }

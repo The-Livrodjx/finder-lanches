@@ -44,7 +44,7 @@ export default function Home() {
                             </h1>
                             <p>{lanche.price}</p>
 
-                            <img src={lanche.url    } alt="" />
+                            <img src={lanche.url} alt="" />
 
                             <button className="add-to-cart"><FaShoppingCart />Adicionar ao Carrinho</button>
                         </div>

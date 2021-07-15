@@ -53,6 +53,7 @@ section.lanches {
     align-items: center;
     justify-content: flex-start;
     flex-direction: column;
+    padding-bottom: 170px;
 }
 
 section.lanches > h1 {

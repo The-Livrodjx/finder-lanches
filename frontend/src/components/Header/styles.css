@@ -28,8 +28,12 @@ nav.header.sticky {
     border-color: #fff;
     z-index: 999;
 }
-nav.header.sticky ul.nav img {
+nav.header.sticky ul.nav img{
     filter: invert(1);
+}
+
+nav.header.sticky ul.nav li a {
+    color: #fff !important;
 }
 
 ul.nav {
@@ -85,9 +89,10 @@ ul.nav li {
     margin: 30px 20px 0px;
 }
 
-ul.nav li a img {
+ul.nav li a img, ul.nav li a{
     height: 2.3rem;
     width: 2.3rem;
+    color: #222
 }
 
 @media (max-width: 868px) {
