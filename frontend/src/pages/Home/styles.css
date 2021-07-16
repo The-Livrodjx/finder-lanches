@@ -3,7 +3,7 @@
     width: 100%;
     height: 100vh;
     min-height: 625px;
-    background: url('../../assets/images/finderlanches-bg.jpg');
+    background: url('../../assets/images/whitefinderlanches.png');
     background-repeat: no-repeat;
     background-size: 100% 99.99%;
 }
@@ -44,7 +44,7 @@
 }
 
 section.lanches {
-    background-color: #fff0d3;
+    background-color: #fff;
     width: 100%;
     height: auto;
     min-height: 950px;
@@ -74,7 +74,7 @@ div.all-lanches {
 }
 
 div.lanche-card {
-    background-color: #fceac6;
+    background-color: #f8f8f8;
     width: 400px;
     height: 400px;
     padding: 20px;

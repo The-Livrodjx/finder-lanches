@@ -18,6 +18,25 @@ export default function Home() {
         }
     
     }, [])
+
+    function addToCart(e, product) {
+        e.preventDefault();
+
+        const cart = JSON.parse(localStorage.getItem('cart'));
+        const allIds = []
+
+        cart.forEach(elem => {
+
+            return allIds.push(elem.id)
+        })
+        
+        if(allIds.indexOf(product.id) === -1) {
+            cart.push(product);
+        }
+        
+        localStorage.setItem('cart', JSON.stringify(cart));
+    };
+
     return (
         <>
             <div className="home-page">
@@ -46,7 +65,7 @@ export default function Home() {
 
                             <img src={lanche.url} alt="" />
 
-                            <button className="add-to-cart"><FaShoppingCart />Adicionar ao Carrinho</button>
+                            <button className="add-to-cart" onClick={e => addToCart(e, lanche)}><FaShoppingCart />Adicionar ao Carrinho</button>
                         </div>
                     ))}
     

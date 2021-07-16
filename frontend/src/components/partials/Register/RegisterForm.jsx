@@ -1,8 +1,11 @@
-import React from 'react'
+import React, {useContext} from 'react'
+import InputMask from 'react-input-mask'
+import { UserContext } from '../../../contexts/userContext'
 import './styles.css'
 import closeIcon from '../../../assets/images/x-close-icon.png'
 
 export default function RegisterForm(props) {
+    const {handleRegister, errorMessage} = useContext(UserContext)
 
     return (
         <div className="register-form">
@@ -11,13 +14,18 @@ export default function RegisterForm(props) {
                 <a href="/" onClick={event => props.forShowRegisterForm(event)}><img src={closeIcon} alt="" /></a>
                 <h1>Cadastrar uma conta</h1>
 
-                <form action="">
+                {errorMessage !== undefined && (
+                    <p style={{color: "red"}}>{errorMessage}</p>
+                )}
+                
+                <form action="" onSubmit={e => handleRegister(e)}>
 
-                    <input type="text" placeholder="Nome" /><br />
-                    <input type="text" placeholder="E-mail" /><br />
-                    <input type="password" placeholder="Senha" name="" id="" /><br />
-                    <input type="text" placeholder="Tel: (dd) 90000-1820" name="" id="" /><br />
-                    <input type="text" placeholder="Endereço" name="" id="" /><br />
+                    <input type="text" name="name" placeholder="Nome" /><br />
+                    <input type="text" name="email" placeholder="E-mail" /><br />
+                    <input type="password" placeholder="Senha" name="password" /><br />
+                    <InputMask type="tel" name="telefone" mask="(99) 99999-9999" placeholder="Tel: (dd) 90000-1820"/><br />
+                    <InputMask type="tel" name="endereco" mask="99999-999" placeholder="CEP"/><br />
+                
 
                     <button type="submit">Continuar</button>
                 </form>

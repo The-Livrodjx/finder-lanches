@@ -8,6 +8,7 @@ import Footer from './components/Footer/Footer'
 
 import { AuthProvider } from './contexts/userContext.js'
 import { UserContext } from './contexts/userContext.js'
+import Cart from './components/Cart/Cart'
 
 function CustomRoute({isPrivate, ...rest}) {
 
@@ -28,6 +29,7 @@ export default function Routes() {
                 <Header/>
                 <Switch>
                     <CustomRoute path="/" exact component={Home}/>
+                    <CustomRoute path="/cart" component={Cart}/>
                     <CustomRoute isPrivate path="/about" component={About}/>
                 </Switch>
                 <Footer />

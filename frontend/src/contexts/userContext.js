@@ -65,6 +65,43 @@ function AuthProvider({children}) {
         
     }
 
+    async function handleRegister(e) {
+
+        e.preventDefault()
+
+        let name = e.target.name.value
+        let email = e.target.email.value
+        let password = e.target.password.value
+        let telefone = e.target.telefone.value
+        let cep = e.target.endereco.value 
+
+        let responseForCEP = await fetch(`https://viacep.com.br/ws/${cep}/json/`)
+        let requestResponse = await responseForCEP.json()
+
+        console.log(requestResponse)
+        api.post('/createUser', {
+            name,
+            email,
+            password,
+            tel: telefone,
+            endereco: requestResponse.logradouro,
+            role: 0
+        }).then(response => {
+
+            alert("Usuário criado com sucesso")
+            api.defaults.headers.Authorization = 'Bearer ' + response.data.token
+
+            localStorage.setItem('token', response.data.token)
+            localStorage.setItem('userName', response.data.userName)
+            setUserName(`${response.data.userName}`)
+            setIsAuthenticated(true)
+
+        }).catch(err => {
+
+            setErrorMessage(err.response.data.err)
+        })
+    }
+
     function handleLogOut() {
 
         setIsAuthenticated(false)
@@ -79,6 +116,7 @@ function AuthProvider({children}) {
                 userName, 
                 authenticated, 
                 handleLogin,
+                handleRegister,
                 handleLogOut, 
                 errorMessage
             }}>

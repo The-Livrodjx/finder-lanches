@@ -47,7 +47,9 @@ class UserController {
             if(!user) {
                 UserModel.create({name, email, password: hash, tel, endereco, role}).then(() => {
 
-                    res.json({msg: "Usuário criado com sucesso"})
+                    var token = jwt.sign({nome: "Livrodjx"}, secret)
+
+                    res.json({msg: "Usuário criado com sucesso", token, userName: name})
                 })
                 .catch(err => {
                     res.json({err: err.message})
