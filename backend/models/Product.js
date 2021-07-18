@@ -13,6 +13,19 @@ const ProductModel = connection.define("products", {
         allowNull: false
     },
 
+    initialValue: {
+        type: Sequelize.FLOAT,
+        allowNull: false
+    },
+    
+    value: {
+        type: Sequelize.FLOAT,
+        allowNull: false
+    },
+    amountToSell: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+    },
     url: {
         type: Sequelize.STRING,
         allowNull: false

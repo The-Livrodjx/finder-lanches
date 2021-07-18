@@ -1,13 +1,15 @@
 import React, {useState} from 'react'
 import './styles.css'
 import {FiArrowLeft} from 'react-icons/fi'
-import {FaShoppingCart, FaTrash, FaMinus, FaPlus, FaCreditCard, FaBarcode} from 'react-icons/fa';
+// FaCreditCard, FaBarcode
+import {FaShoppingCart, FaTrash, FaMinus, FaPlus} from 'react-icons/fa';
 import {Link} from 'react-router-dom'
 
 export default function Cart() {
 
     const [cart, setCart] = useState('')
     const [cartTotal, setCartTotal] = useState('')
+
 
     if(cart === '') {
 
@@ -18,31 +20,91 @@ export default function Cart() {
         else {
             setCart(JSON.parse(localStorage.getItem('cart')))
         }
-    }
+    }   
 
     function getCartTotal() {
 
         if(cart.length !== 0 || cart !== '') {
 
             if(cartTotal === '' || cartTotal.total === 0) {
-                let [subtotal, subtotalParceled, total, totalParceled] = [0, 0, 0, 0]
+                let subtotal = 0
 
                 cart.forEach(product => {
 
-                    subtotal += product.price
-                    subtotalParceled += product.parceled
-
+                    subtotal += product.value
                 })
 
-                total = subtotal
-                totalParceled = subtotalParceled
+                let total = subtotal
+                
 
-                setCartTotal({subtotal, subtotalParceled, total, totalParceled})
+                setCartTotal(total)
             }
         }
     }
 
-    function removeProduct(e, productId) {
+    function incrementAmount(e, productId, productPrice) {
+
+        e.preventDefault()
+
+        const item = document.getElementById(`amountToSell${productId}`)
+        const value = document.getElementById(`value${productId}`)
+
+        let oldCart = cart.find(product => product.id === productId)
+        
+
+        let currentAmount = Number(oldCart.amountToSell) + 1
+        let currentValue = Number(oldCart.value) + productPrice
+
+        
+        
+        oldCart.value = currentValue
+        oldCart.amountToSell = currentAmount
+
+        const newCart = cart.filter(product => product.id !== productId)
+
+        newCart.push(oldCart)
+
+        
+
+        item.innerHTML = currentAmount
+        value.innerHTML = 'R$'+currentValue
+
+        setCartTotal(cartTotal + productPrice)
+
+        localStorage.setItem('cart', JSON.stringify(newCart))
+    }
+
+    function decrementAmount(e, productId, productPrice) {
+        e.preventDefault()
+
+        const item = document.getElementById(`amountToSell${productId}`)
+        const value = document.getElementById(`value${productId}`)
+
+        
+        let currentAmount = Number(item.innerHTML) - 1
+        let currentValue = Number(value.innerHTML.split('$')[1]) - productPrice
+        let oldCart = cart.find(product => product.id === productId)
+        
+        
+        
+        oldCart.value = currentValue
+        oldCart.amountToSell = currentAmount
+
+        const newCart = cart.filter(product => product.id !== productId)
+
+        newCart.push(oldCart)
+
+        if(currentAmount >= 1) {
+
+            item.innerHTML = currentAmount
+            value.innerHTML = 'R$'+currentValue
+
+            setCartTotal(cartTotal - productPrice)
+            localStorage.setItem('cart', JSON.stringify(newCart))
+        }
+    }
+
+    function removeProduct(e, productId, productPrice) {
 
         e.preventDefault()
 
@@ -55,6 +117,7 @@ export default function Cart() {
 
             localStorage.setItem('cart', JSON.stringify(newCart))
             setCart(newCart)
+            setCartTotal(cartTotal - productPrice)
 
         }, 200)
     }
@@ -89,62 +152,31 @@ export default function Cart() {
         
                                 <h4 className="title">{product.name}</h4>
         
-                                <p className="value">{
-                                    product.price
+                                <p className="value" id={`value${product.id}`}>R${
+                                    product.value
                                 }</p>
 
                                 <div className="quantity">
-                                    <FaMinus />
-                                    <p>1</p>
-                                    <FaPlus />
+                                    <FaMinus onClick={e => decrementAmount(e, product.id, product.initialValue)}/>
+                                    <p id={`amountToSell${product.id}`}>{product.amountToSell}</p>
+                                    <FaPlus onClick={e => incrementAmount(e, product.id, product.initialValue)}/>
                                 </div>
                             
-                                <FaTrash size={14} className="trashIcon" onClick={e => removeProduct(e, product.id)}/>
+                                <FaTrash size={14} className="trashIcon" onClick={e => removeProduct(e, product.id, product.initialValue)}/>
                             </li>
                         ))}
                     </ul>
 
                     <ul className="price-table">
-                        <li>
-                            <h4>Subtotal</h4>
-                            <p className="price">{
-                                Intl.NumberFormat('pt-BR', {
-                                    style: 'currency',
-                                    currency: 'BRL'
-                                }).format(cartTotal.subtotalParceled)
-                            }</p>
-                        </li>
-
-                
+                       
 
                         <li>
                             <h4>Total</h4>
                             <p className="price">{
-                                Intl.NumberFormat('pt-BR', {
-                                    style: 'currency',
-                                    currency: 'BRL'
-                                }).format(cartTotal.totalParceled)
+                                cartTotal
                             }</p>
                         </li>
 
-                        <li>
-                            <h3>
-                                <FaCreditCard />
-                                12x de {
-                                    cartTotal.totalParceled /12
-                                }<br />
-                                s/ juros
-                            </h3>
-                        </li>
-
-                        <li>
-                            <h3>
-                                <FaBarcode />{
-                                    cartTotal.total
-                                }<br />
-                                com desconto à vista
-                            </h3>
-                        </li>
                     </ul>
 
                 </div>

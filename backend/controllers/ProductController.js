@@ -19,13 +19,15 @@ class ProductController {
             name,
             price,
             url,
+            initialValue,
+            value,
             amount 
         } = req.body
 
 
         if(name !== undefined && price !== undefined && amount !== undefined) {
 
-            ProductModel.create({name, price, url, amount}).then(() => {
+            ProductModel.create({name, price, value, initialValue, amountToSell: 1, url, amount}).then(() => {
 
                 res.json({msg: "Produto cadastrado com sucesso"})
             }).catch(err => {

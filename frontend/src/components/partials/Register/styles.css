@@ -18,7 +18,7 @@
     flex-direction: column;
     align-items: center;
     width: 500px;
-    background-color: #fae0ae;
+    background-color: whitesmoke;
 }
 
 .register-form-content a img {
@@ -38,6 +38,7 @@
     border-radius: 5px;
     border: none;
     margin: 10px;
+    border: 1px solid #222;
     width: 250px;
     padding: 10px;
 }
