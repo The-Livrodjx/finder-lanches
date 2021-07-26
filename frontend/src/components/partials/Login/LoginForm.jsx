@@ -20,7 +20,7 @@ export default function LoginForm(props) {
                     ) : 
                     (<></>)
                 }
-                <form action="" onSubmit={e => handleLogin(e)}>
+                <form action="" onSubmit={e => handleLogin(e, false)}>
 
                     <input type="email" placeholder="E-mail" name="email"/><br />
                     <input type="password" placeholder="Senha" name="password" id="" /><br />

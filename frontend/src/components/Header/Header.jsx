@@ -17,6 +17,13 @@ export default function Header() {
 
     const [cart, setCart] = useState([]);
 
+    useEffect(() => {
+        if (authenticated) {
+            setShowLoginForm(false)
+            setShowRegister(false)
+        }
+    }, [authenticated, showLoginForm])
+
     if (localStorage.getItem('cart') == null) localStorage.setItem('cart', "[]");
 
     function getCart() {
@@ -64,13 +71,6 @@ export default function Header() {
         }
 
     })
-
-    useEffect(() => {
-        if (authenticated) {
-            setShowLoginForm(false)
-            setShowRegister(false)
-        }
-    }, [authenticated, showLoginForm])
 
     function logOut(e) {
 

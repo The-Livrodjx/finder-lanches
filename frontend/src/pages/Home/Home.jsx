@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react'
 import {FaShoppingCart} from 'react-icons/fa'
+
 import api from '../../services/api'
 import './styles.css'
 export default function Home() {
@@ -16,7 +17,7 @@ export default function Home() {
                 setLanches(response.data)
             })
         }
-    
+        
     }, [])
 
     function addToCart(e, product) {

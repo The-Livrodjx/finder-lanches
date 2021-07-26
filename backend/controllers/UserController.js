@@ -85,7 +85,7 @@ class UserController {
 
                             var token = jwt.sign({name: user.name}, secret, {expiresIn: Date.now() * 60 * 60})
 
-                            return res.json({token, userName: user.name})
+                            return res.json({token, userName: user.name, email: user.email})
                         }
                         else {
                             res.status(406)

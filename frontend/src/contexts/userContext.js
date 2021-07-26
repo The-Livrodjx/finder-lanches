@@ -1,4 +1,5 @@
 import React, {createContext, useEffect, useState} from 'react'
+import { useHistory } from 'react-router-dom'
 
 import api from '../services/api'
 
@@ -6,8 +7,11 @@ const UserContext = createContext()
 
 function AuthProvider({children}) {
 
+    const history = useHistory()
     const [authenticated, setIsAuthenticated] = useState(false)
+    const [howMuchUserWillPay, setHowMuchUserWillPay] = useState(0)
     const [userName, setUserName] = useState(undefined)
+    const [userEmail, setUserEmail] = useState('')
     const [errorMessage, setErrorMessage] = useState(undefined)
 
     useEffect(() => {
@@ -37,7 +41,7 @@ function AuthProvider({children}) {
         }
     }, [])
 
-    function handleLogin(e) {
+    function handleLogin(e, toRedirect) {
         e.preventDefault()
         
         let email = e.target.email.value
@@ -50,14 +54,20 @@ function AuthProvider({children}) {
             localStorage.setItem('token', response.data.token)
             localStorage.setItem('userName', response.data.userName)
             setUserName(`${response.data.userName}`)
+            setUserEmail(`${response.data.email}`)
             setIsAuthenticated(true)
 
+            if(toRedirect) {
+
+                history.push('/cart')
+            }
             return true
 
         }).catch(err => {
             console.log(err)
             if(err) {
                 setErrorMessage(err.response.data.errMsg)
+                //console.log(err.message)
             }
 
             return false
@@ -65,7 +75,7 @@ function AuthProvider({children}) {
         
     }
 
-    async function handleRegister(e) {
+    async function handleRegister(e, toRedirect) {
 
         e.preventDefault()
 
@@ -94,7 +104,13 @@ function AuthProvider({children}) {
             localStorage.setItem('token', response.data.token)
             localStorage.setItem('userName', response.data.userName)
             setUserName(`${response.data.userName}`)
+            setUserEmail(`${response.data.email}`)
             setIsAuthenticated(true)
+
+            if(toRedirect) {
+
+                history.push('/')
+            }
 
         }).catch(err => {
 
@@ -117,7 +133,10 @@ function AuthProvider({children}) {
                 authenticated, 
                 handleLogin,
                 handleRegister,
-                handleLogOut, 
+                handleLogOut,
+                howMuchUserWillPay,
+                userEmail,
+                setHowMuchUserWillPay,
                 errorMessage
             }}>
             {children}
