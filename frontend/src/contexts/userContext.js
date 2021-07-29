@@ -9,6 +9,7 @@ function AuthProvider({children}) {
 
     const history = useHistory()
     const [authenticated, setIsAuthenticated] = useState(false)
+    const [isUserAdmin, setIsUserAdmin] = useState(false)
     const [howMuchUserWillPay, setHowMuchUserWillPay] = useState(0)
     const [userName, setUserName] = useState(undefined)
     const [userEmail, setUserEmail] = useState('')
@@ -27,18 +28,24 @@ function AuthProvider({children}) {
                 }
             }
 
-            api.get('/', req).then(response => {
+            api.post('/', {
+                token: token
+            } ,req).then(response => {
 
                 if(response.status === 200) {
                     api.defaults.headers.Authorization = `Bearer ${token}`
 
                     setIsAuthenticated(true)
                     setUserName(`${userName}`)
+                    setUserEmail(`${response.data.email}`)
+                    response.data.role === 1 && setIsUserAdmin(true)
                 }
+
             }).catch(err => {
                 alert("Seu token é inválido, por favor faça login novamente")
+                handleLogOut()
             })
-        }
+        }   
     }, [])
 
     function handleLogin(e, toRedirect) {
@@ -57,6 +64,8 @@ function AuthProvider({children}) {
             setUserEmail(`${response.data.email}`)
             setIsAuthenticated(true)
 
+            response.data.role === 1 && setIsUserAdmin(true)
+            
             if(toRedirect) {
 
                 history.push('/cart')
@@ -134,6 +143,7 @@ function AuthProvider({children}) {
                 handleLogin,
                 handleRegister,
                 handleLogOut,
+                isUserAdmin,
                 howMuchUserWillPay,
                 userEmail,
                 setHowMuchUserWillPay,

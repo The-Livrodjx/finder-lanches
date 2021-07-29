@@ -63,6 +63,8 @@ app.post("/checkout", async (req, res) => {
 
                 cod_pag: random_id,
                 payer: user.email,
+                description: description,
+                purchaseTime: `${new Date()}`,
                 status: 0,
                 userId: user.id
             }).then(async () => {

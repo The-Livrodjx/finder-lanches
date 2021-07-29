@@ -1,6 +1,6 @@
 import React, { useState, useRef, useContext, useEffect } from 'react'
 import { UserContext } from '../../contexts/userContext'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { FaAlignJustify, FaArrowRight, FaTrash, FaShoppingCart } from 'react-icons/fa'
 import xCloseIcon from '../../assets/images/x-close-icon.png'
 import LoginForm from '../partials/Login/LoginForm'
@@ -9,7 +9,8 @@ import './styles.css'
 
 export default function Header() {
 
-    const { userName, authenticated, handleLogOut } = useContext(UserContext)
+    const { userName, authenticated, handleLogOut, isUserAdmin } = useContext(UserContext)
+    const history = useHistory()
     const [showLoginForm, setShowLoginForm] = useState(false)
     const [showRegisterForm, setShowRegister] = useState(false)
 
@@ -84,6 +85,15 @@ export default function Header() {
             window.location.reload()
         }
     }
+    function handleGoProfile() {
+
+        if(isUserAdmin) {
+            history.push("/admin")
+        }
+        else {
+            history.push('/profile')
+        }
+    }
 
     function handleShowLoginForm(e) {
 
@@ -109,7 +119,8 @@ export default function Header() {
             <nav className="header">
 
                 <div className="logo">
-                    <img src="https://img.icons8.com/plasticine/2x/hamburger.png" alt="Finder-lanches" />
+                    <img onClick={e => history.push('/')}
+                    src="https://img.icons8.com/plasticine/2x/hamburger.png" alt="Finder-lanches" />
                     <p>Finder Lanches</p>
                 </div>
 
@@ -137,8 +148,10 @@ export default function Header() {
                             <>
                                 <div style={{ display: 'inline-flex', alignItems: 'center' }}>
                                     <img style={{ width: 35, height: 35, marginRight: 10 }}
+                                        className="profileBtn"
                                         src="https://upload.wikimedia.org/wikipedia/commons/7/70/User_icon_BLACK-01.png"
-                                        alt="Usuário" />
+                                        alt="Usuário"
+                                        onClick={e => handleGoProfile()}/>
 
                                     <h4>{userName}</h4>
                                 </div>

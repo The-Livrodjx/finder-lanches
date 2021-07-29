@@ -15,6 +15,17 @@ const PaymentModel = connection.define("payments", {
         type: Sequelize.STRING,
         allowNull: false
     },
+
+    description: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    
+    purchaseTime: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    
     status: {
         type: Sequelize.INTEGER,
         allowNull: false

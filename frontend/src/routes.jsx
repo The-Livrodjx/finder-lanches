@@ -10,7 +10,8 @@ import { UserContext } from './contexts/userContext.js'
 import Cart from './components/Cart/Cart'
 import Login from './pages/Login/Login'
 import Register from './pages/Register/Register'
-import PaymentForm from './pages/Checkout/Checkout'
+import Profile from './pages/Profile/Profile'
+import Admin from './pages/admin/Admin'
 
 
 function CustomRoute({isPrivate, ...rest}) {
@@ -19,6 +20,18 @@ function CustomRoute({isPrivate, ...rest}) {
 
     if(isPrivate && !authenticated) {
         return <Redirect to="/login" />
+    }
+
+    return <Route {...rest} />
+}
+
+function AdminRoute({isPrivate, ...rest}) {
+
+    const {authenticated, isUserAdmin} = useContext(UserContext)
+    console.log(isUserAdmin)
+    if(isPrivate && !authenticated && !isUserAdmin) {
+
+        return <Redirect to="/" />
     }
 
     return <Route {...rest} />
@@ -35,7 +48,8 @@ export default function Routes() {
                     <CustomRoute path="/cart" component={Cart}/>
                     <CustomRoute path="/login" component={Login}/>
                     <CustomRoute path="/register" component={Register}/>
-                    <CustomRoute path="/checkout" component={PaymentForm}/>
+                    <CustomRoute isPrivate path="/profile" component={Profile}/>
+                    <AdminRoute isPrivate path="/admin" component={Admin}/>
                 </Switch>
                 <Footer />
             </AuthProvider>

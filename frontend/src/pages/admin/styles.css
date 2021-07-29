@@ -1,0 +1,42 @@
+.admin-page {
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    height: 100vh;
+}
+
+.admin-content {
+    margin-top: 100px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.admin-content h1 {
+    margin-bottom: 40px;
+}
+
+.admin-content table {
+    width: 90%;
+    border-collapse: collapse;
+}
+
+.admin-content table td, .admin-content table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.admin-content table th {
+
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}

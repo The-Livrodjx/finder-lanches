@@ -3,19 +3,21 @@ import './styles.css'
 import { FiArrowLeft } from 'react-icons/fi'
 // FaCreditCard, FaBarcode
 import { FaShoppingCart, FaTrash, FaMinus, FaPlus } from 'react-icons/fa';
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { UserContext } from '../../contexts/userContext';
 import api from '../../services/api';
 
 export default function Cart() {
     const {
         userEmail,
+        userName,
+        authenticated,
         howMuchUserWillPay, 
         setHowMuchUserWillPay
     } = useContext(UserContext)
     const [cart, setCart] = useState('')
     const [cartTotal, setCartTotal] = useState(0)
-
+    const history = useHistory()
  
     useEffect(() => {
 
@@ -46,9 +48,8 @@ export default function Cart() {
 
                 let total = subtotal
 
-
+                
                 setCartTotal(total)
-                setHowMuchUserWillPay(total)
             }
         }
     }
@@ -139,11 +140,15 @@ export default function Cart() {
     function sendSubmit(event) {
         event.preventDefault()
 
-        let email = userEmail
-        let price = howMuchUserWillPay
+
+        if(!authenticated) {
+            history.push('/login')
+        }
+        let email = userEmail || userName
+        let price = cartTotal
         let description = ''
 
-        cart.forEach(elem => description += `${elem.name} `)
+        cart.forEach(elem => description += `${elem.name}, `)
 
         api.post("/checkout", {email, price, description}).then((response) => {
 
@@ -217,7 +222,7 @@ export default function Cart() {
                         </li>
                         <li>
                             <form onSubmit={(e) => sendSubmit(e)} method="POST">
-                                <button type="submit">Checkout</button>
+                                <button type="submit" className="checkoutBtn">Finalizar compra</button>
                             </form>
                         </li>
                     </ul>

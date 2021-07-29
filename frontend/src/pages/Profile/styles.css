@@ -1,0 +1,67 @@
+.profile-page {
+    margin-top: 150px;
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.profile-page h1 {
+    margin: 0 auto;
+}
+
+.profile-content {
+    margin-left: 30px;
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+}
+
+ul.request-list {
+    margin-top: 100px;
+    max-width: 1200px;
+    max-height: 400px;
+    padding: 20px;
+    overflow-y: scroll;
+    border: 1px solid #167902;
+    list-style: none;
+}
+ul.request-list li {
+    margin-bottom: 10px;
+    display: inline-flex;
+}
+
+ul.request-list li p {
+    margin-left: 10px;
+}
+
+.cancelRequest {
+    width: 150px;
+    margin-left: 10px;
+    margin-top: -2px;
+    padding: 4px 8px;
+    background-color: #e71b33;
+    color: #fff;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+}
+
+.cancelRequest:hover {
+    background-color: #d61028;
+    transition: 0.2s;
+}
+
+.finishedRequest {
+    width: 150px;
+    margin-left: 10px;
+    margin-top: -2px;
+    padding: 4px 8px;
+    background-color: #167902;
+    color: #fff;
+    cursor: not-allowed;
+    border: none;
+    border-radius: 5px;
+}

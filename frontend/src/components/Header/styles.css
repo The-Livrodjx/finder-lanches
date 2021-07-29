@@ -81,6 +81,7 @@ ul.nav {
 }
 
 .header .logo img {
+    cursor: pointer;
     height: 110px;
     width: 110px;
 }
@@ -93,6 +94,13 @@ ul.nav li a img, ul.nav li a{
     height: 2.3rem;
     width: 2.3rem;
     color: #222
+}
+
+.profileBtn {
+    cursor: pointer;
+    width: 35;
+    height: 35;
+    margin-right: 10 
 }
 
 @media (max-width: 868px) {

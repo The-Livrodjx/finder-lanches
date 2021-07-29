@@ -1,6 +1,6 @@
 const UserModel = require("../models/Usuario")
 const bcrypt = require("bcrypt")
-
+const PaymentModel = require("../models/Payment")
 const jwt = require("jsonwebtoken")
 const secret = "KLSFAFKLAFNMJFSNFASNMJAFSNMJ"
 
@@ -8,9 +8,12 @@ class UserController {
    
     async index(req, res) {
 
-        res.json({msg: "Tudo ok"})
+        const {token} = req.body
+        var decoded = jwt.verify(token, secret)
+
+        res.json({email: decoded.email, role: decoded.role})
     }
-    
+   
     async genToken(req, res ) {
 
         var token = jwt.sign({nome: "Livrodjx"}, secret)
@@ -83,9 +86,10 @@ class UserController {
                         let correct = bcrypt.compareSync(password, user.password)
                         if(correct) {
 
-                            var token = jwt.sign({name: user.name}, secret, {expiresIn: Date.now() * 60 * 60})
+                            var token = jwt.sign({name: user.name, email: user.email, role: user.role}, 
+                                secret, {expiresIn: Date.now() * 60 * 60})
 
-                            return res.json({token, userName: user.name, email: user.email})
+                            return res.json({token, userName: user.name, email: user.email, role: user.role})
                         }
                         else {
                             res.status(406)
@@ -109,6 +113,24 @@ class UserController {
         else {
             res.status(406)
             return res.json({errMsg: "Por favor digite os dados corretamente"})
+        }
+    }
+
+    async getRequests(req, res) {
+
+        const {email} = req.body 
+
+        console.log(email)
+        if(email != undefined) {
+
+            UserModel.findOne({where: {email: email}, attributes: ['id']}).then(user => {
+                let userId = user.id
+                PaymentModel.findAll({where: {userId: userId}}).then(payments => {
+
+
+                    res.json(payments)
+                })
+            })
         }
     }
 

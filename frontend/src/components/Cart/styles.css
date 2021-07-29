@@ -70,6 +70,15 @@
     transition: background-color 0.2s;
 }
 
+.checkoutBtn {
+    padding: 7px 14px;
+    background-color: #167902;
+    color: #fff;
+    cursor: pointer;
+    border: none;
+    border-radius: 3px;
+}
+
 .shop-info {
     display: grid;
     width: 100%;
